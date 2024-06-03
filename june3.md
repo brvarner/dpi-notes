@@ -47,3 +47,28 @@ Today, we continued our dive into the relational database swamp with a presentat
     - Instead, ended up making a users and a tasks table
       - each user entry has an id, an email, and a password
       - each task entry has its own id, task text, a status marker, and a user id to tie it to its owner
+
+# Getting Started with Rails
+
+We made it! What is happening!?
+
+- OK, so there are a few differences bt Sinatra and Rails, but here's how we get started.
+- There are a few key files/concepts we need to know/follow to begin.
+  - **config/routes.rb** - This is our app's router
+    - Instead of getting our routes by typing: `get ("/") do end`, we now have to type: `get("/rock", {:controller => "", :action => ""})`
+      - This structure allows us to break up our app and import different files to perform tasks
+      - **controller** - A controller is a class that provides methods which the page runs as it loads
+        - controllers live at `app/controllers`
+        - in the example above, we have a file called `zebra_controller.rb` that holds a class called `ZebraController` which holds a method called `giraffe`
+          - We set this controller up to inherit from its parent class, the ApplicationController (`class ZebraController < ApplicationController`)
+          - We're going to be inheriting attributes from parent classes a lot in Rails, taking pre-written methods that we don't need to redefine
+            - One of the methods is **render**, which shows something on a certain page.
+            - so if we wanted to render plaintext on the page above, we'd type:
+              ```
+                class ZebraController < ApplicationController
+                  def giraffe
+                    render({ :plain => "howdy" })
+                  end
+                end
+              ```
+              - and this code would render the word howdy on the page when we went to the /rock domain.
