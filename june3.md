@@ -63,12 +63,23 @@ We made it! What is happening!?
           - We set this controller up to inherit from its parent class, the ApplicationController (`class ZebraController < ApplicationController`)
           - We're going to be inheriting attributes from parent classes a lot in Rails, taking pre-written methods that we don't need to redefine
             - One of the methods is **render**, which shows something on a certain page.
-            - so if we wanted to render plaintext on the page above, we'd type:
-              ```
-                class ZebraController < ApplicationController
-                  def giraffe
-                    render({ :plain => "howdy" })
+              - so if we wanted to render plaintext on the page above, we'd type:
+                ```
+                  class ZebraController < ApplicationController
+                    def giraffe
+                      render({ :plain => "howdy" })
+                    end
                   end
-                end
-              ```
-              - and this code would render the word howdy on the page when we went to the /rock domain.
+                ```
+                - and this code would render the word howdy on the page when we went to the /rock domain.
+              - render is more flexible than sinatra's ERB method
+                - we're going to use it for JSON later
+                - we provide the `:template` key, and then point it towards an html.erb file
+                - ex: render({:template => "game_templates/play_rock"})
+                  - we don't have to add .html.erb to the end of the filename when rendering with template as of Rails 7.
+                - In Rails, you can respond out of the box to many formats, including **JSON, CSV, and more**
+
+## Form Params
+
+- When using form params, you access them in the controller by using **params.fetch()**
+  - for example: `@target_num = params.fetch('number').to_f`
