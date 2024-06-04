@@ -68,3 +68,229 @@ We'll probably have two networking sessions according to Ruben.
 - Look at upcoming conferences, and articles in the space you're connecting with someone around to look a bit more connected
   - Ex: Hey, did you see this article? Hey did you know about this thing coming up?
     - Hyperlocal news is great especially, **always bring something to the table**
+
+# Ruby Notes
+
+Today, we're learning about Nesting Routes in Rails apps!
+
+## Nested Routes
+
+- Nesting is a way of organizing and structuring code to reflect the hierarchical relationships between different resources
+  - For example: if you have a project model with many tasks, you can nest the routes for tasks within the routes for those projects
+
+### When To Use Nested Routes?
+
+- **Hierarchical Data** - When one resource logically belongs to another (e.g. tasks belonging to a project, or a property company has many different real estate listings to show)
+- **Scoping** - to scope related resources under their parent resource
+- **Clear URLs** - to generate URLs that reflect the relationships between resources (e.g., `projects/:project_id/tasks`)
+
+### Example
+
+```
+# config/routes.rb
+Rails.application.routes.draw do
+  resources :projects do
+    resources :tasks
+  end
+end
+```
+
+- On this example, you can create URLs like those above and show which task belongs to which projects
+
+- Here's an example of the RCAV (Render, Controller, Action, View) model in action with Nested Routes:
+
+```
+# app/controllers/tasks_controller.rb
+class TasksController < ApplicationController
+  before_action :set_project
+
+  def index
+    @tasks = @project.tasks
+  end
+
+  def show
+    @task = @project.tasks.find(params[:id])
+  end
+
+  def new
+    @task = @project.tasks.build
+  end
+
+  def create
+    @task = @project.tasks.build(task_params)
+    if @task.save
+      redirect_to [@project, @task], notice: 'Task was successfully created.'
+    else
+      render :new
+    end
+  end
+
+  def edit
+    @task = @project.tasks.find(params[:id])
+  end
+
+  def update
+    @task = @project.tasks.find(params[:id])
+    if @task.update(task_params)
+      redirect_to [@project, @task], notice: 'Task was successfully updated.'
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    @task = @project.tasks.find(params[:id])
+    @task.destroy
+    redirect_to project_tasks_path(@project), notice: 'Task was successfully destroyed.'
+  end
+
+  private
+
+  def set_project
+    @project = Project.find(params[:project_id])
+  end
+
+  def task_params
+    params.require(:task).permit(:name, :description, :due_date)
+  end
+end
+```
+
+- Notice a few things about this example:
+  - the index method brings all tasks associated with a project
+  - you can have public and private methods in Ruby, private methods are inaccessible by users, but can operate within the class
+
+### Nested Attributes
+
+- Nested attributes let you save attributes on associated records via the parent record
+  - This tech is useful when dealing with forms that need to update multiple models
+
+#### When to Use Nested Attributes
+
+- **Complex forms** - forms that handle attributes for multiple related models
+- **Efficient updates** - updating parent and child records with a single request
+- **Caveats**
+  - **Limit nesting depth** - Avoid deep nesting, typically you just need one level of nesting
+  - **Only use nesting when absolutely necessary**
+
+##### Examples
+
+- The following is how you set up nested attributes in a Rails application
+
+```
+# app/models/project.rb
+class Project < ApplicationRecord
+  has_many :tasks, dependent: :destroy
+  accepts_nested_attributes_for :tasks, allow_destroy: true
+end
+```
+
+- We're telling the app that this class will have several tasks, and it accepts nested attributes for those tasks
+- With that set up, you can manage Task records using the Project model. Here's how a possible ProjectsController would look:
+
+```
+# app/controllers/projects_controller.rb
+class ProjectsController < ApplicationController
+  def new
+    @project = Project.new
+    @project.tasks.build
+  end
+
+  def create
+    @project = Project.new(project_params)
+    if @project.save
+      redirect_to @project, notice: 'Project was successfully created.'
+    else
+      render :new
+    end
+  end
+
+  def edit
+    @project = Project.find(params[:id])
+  end
+
+  def update
+    @project = Project.find(params[:id])
+    if @project.update(project_params)
+      redirect_to @project, notice: 'Project was successfully updated.'
+    else
+      render :edit
+    end
+  end
+
+  private
+
+  def project_params
+    params.require(:project).permit(:name, :description, tasks_attributes: [:id, :name, :description, :due_date, :_destroy])
+  end
+end
+```
+
+- So the last method, project_params, shows that navigation **requires** a project param, and that the permitted flags include everything in the function args
+- The rest of the functions are pure CRUD
+
+- Not to be outdone, here's an example form with nested attributes
+
+```
+<!-- app/views/projects/_form.html.erb -->
+<%= form_with(model: @project) do |form| %>
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_area :description %>
+  </div>
+
+  <h3>Tasks</h3>
+  <%= form.fields_for :tasks do |task_form| %>
+    <div class="nested-fields">
+      <div class="field">
+        <%= task_form.label :name %>
+        <%= task_form.text_field :name %>
+      </div>
+      <div class="field">
+        <%= task_form.label :description %>
+        <%= task_form.text_area :description %>
+      </div>
+      <div class="field">
+        <%= task_form.label :due_date %>
+        <%= task_form.date_field :due_date %>
+      </div>
+      <%= task_form.check_box :_destroy %>
+      <%= task_form.label :_destroy, "Remove task" %>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
+```
+
+# Ian's Corner
+
+Today we're talkin BOOTSTRAP
+
+- Bootstrap is a reach goal to add for our future projects, it's good to get some practice
+
+## Bootstrap
+
+- Bootstrap makes it very easy to spin up well designed stuff without spending a lot of time writing CSS rules
+- If you want to make your own custom bootstrap styling, you can create it at **[Bootstrap Build](https://bootstrap.build/app)**
+- Minified Stylesheets can drastically increase performance
+
+### Breakpoints
+
+- A medium breakpoint will style things differently once you get bigger than maybe a phone or something
+- So like setting a medium breakpoint means the app looks diff on small screens
+
+### Browsers view CSS differently
+
+- Different browsers view CSS rules differently
+  - webkit is Safari
+  - moz is Mozilla
+  - Keep rules for multiple browsers to ensure compatibility
+- If you're doing
