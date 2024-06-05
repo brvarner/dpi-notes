@@ -293,4 +293,3 @@ Today we're talkin BOOTSTRAP
   - webkit is Safari
   - moz is Mozilla
   - Keep rules for multiple browsers to ensure compatibility
-- If you're doing
