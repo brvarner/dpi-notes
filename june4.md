@@ -68,6 +68,29 @@ We'll probably have two networking sessions according to Ruben.
 - Look at upcoming conferences, and articles in the space you're connecting with someone around to look a bit more connected
   - Ex: Hey, did you see this article? Hey did you know about this thing coming up?
     - Hyperlocal news is great especially, **always bring something to the table**
+- LinkedIn has a score for everyone, which ranks you based on your activity and engagement on the platform, it's called an SSI
+
+### Networking Pt. 2 Following up on Networking Events (June 6)
+
+- Never Eat Alone is a good book by Keith
+- How to win friends and influence people by Dale Carnegie
+- Should I be reading books on Networking?
+- Both of these books mention having a **generosity mindset**
+  - going into events, thinking about what I can give without expecting anything in return
+- 1871 is in Merchandise Mart, it's a startup accelerator/incubator
+  - Universities, startups, founders, etc have spaces there
+  - They have an event on June 20 for Blk tech makers (BLKtech Pitch Competition)[https://1871.com/event/blktech-pitch-competition/]
+- NSBI - National society of Black Engineers
+- mHub is an accelerator for physical, manufactured startup items
+
+#### Becoming a part of an organization
+
+- If there's an org that has a lot of what you need, get involved with them, volunteer, show up consistently, get to know people
+
+#### Setting up coffee meetings
+
+- Do your research, reach out to people
+- If they meet up with you for coffee, do your research, ask questions, make sure you casually get across your experience, be sure to go outside of work topics to make things more casual
 
 # Ruby Notes
 
