@@ -2,6 +2,30 @@
 
 Today Ruben is giving a presentation on presentations! He'll be giving us th eslide deck after the presentation is complete
 
+## Ian's Corner
+
+Today, we're going to start talking about final projects
+
+### Requirements
+
+- Think of a pain point
+  - Think of a hypothesis that may solve the problem
+  - See if you can build it
+- You don't want to "think up" an idea, but you really want to notice something that may seem broken, or that can be fixed
+- take a proof of concept and take it all the way from a sketch to deployment
+
+#### Hard Requirements
+
+- It should solve a problem that we clearly articulate
+- It should be interactive in some way, it shouldn't just be an informational static website
+
+#### Soft Requirements
+
+- You can interact with it through your browser
+- Uses a database to store info
+- Has some associations b/t tables
+- Has sign-in/sign-out functionality to personalize ux
+
 ## Giving Great Presentations
 
 Here are the keys to a great presentation
